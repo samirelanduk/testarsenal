@@ -1,9 +1,12 @@
 from unittest.mock import patch
 from django.test import TestCase, RequestFactory
 from django.core.urlresolvers import resolve
+from selenium.common.exceptions import NoSuchElementException
 
 class TestCaseX:
 
+    NoElement = NoSuchElementException
+    
     def check_url_returns_view(self, url, view):
         resolver = resolve(url)
         self.assertEqual(resolver.func, view)
