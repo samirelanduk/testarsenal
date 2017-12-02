@@ -18,7 +18,8 @@ class TestCaseX:
         data = data if data else {}
         if  method == "post":
             request = factory.post(path, data=data)
-        request = factory.get(path, data=data)
+        else:
+            request = factory.get(path, data=data)
         return request
 
 
@@ -31,6 +32,12 @@ class TestCaseX:
             self.assertEqual(mock_render.call_args_list[0][0][1], template)
         finally:
             render_patcher.stop()
+
+
+    def check_view_redirects(self, view, request, url, *args):
+        response = view(request, *args)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, url)
 
 
     def get(self, path):
