@@ -1,3 +1,4 @@
+from time import sleep
 from unittest.mock import patch
 from django.test import TestCase, RequestFactory
 from django.core.urlresolvers import resolve
@@ -6,7 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 class TestCaseX:
 
     NoElement = NoSuchElementException
-    
+
     def check_url_returns_view(self, url, view):
         resolver = resolve(url)
         self.assertEqual(resolver.func, view)
@@ -34,3 +35,25 @@ class TestCaseX:
 
     def get(self, path):
         self.browser.get(self.live_server_url + path)
+
+
+    def check_page(self, url):
+        self.assertEqual(self.browser.current_url, self.live_server_url + url)
+
+
+    def check_title(self, text):
+        self.assertIn(text, self.browser.title)
+
+
+    def check_h1(self, text):
+        self.assertIn(text, self.browser.find_element_by_tag_name("h1").text)
+
+
+    def scroll_to(self, element):
+        self.browser.execute_script("arguments[0].scrollIntoView();", element)
+
+
+    def click(self, element):
+        self.scroll_to(element)
+        element.click()
+        sleep(0.5)
