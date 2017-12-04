@@ -34,6 +34,21 @@ class TestCaseX:
             render_patcher.stop()
 
 
+    def check_view_has_context(self, view, request, context, *args):
+        render_patcher = patch("zincbind.views.render")
+        mock_render = render_patcher.start()
+        try:
+            response = view(request, *args)
+            self.assertTrue(mock_render.called)
+            if len(mock_render.call_args_list[0][0]) <= 2:
+                self.fail("No context sent")
+            sent_context = mock_render.call_args_list[0][0][2]
+            for key in context:
+                self.assertEqual(sent_context[key], context[key])
+        finally:
+            render_patcher.stop()
+
+
     def check_view_redirects(self, view, request, url, *args):
         response = view(request, *args)
         self.assertEqual(response.status_code, 302)
