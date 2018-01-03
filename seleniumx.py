@@ -1,7 +1,8 @@
 from time import sleep
-from unittest.mock import patch
+from unittest.mock import patch, Mock
+from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase, RequestFactory
-from django.core.urlresolvers import resolve
+from django.urls import resolve
 from selenium.common.exceptions import NoSuchElementException
 
 class TestCaseX:
@@ -13,13 +14,19 @@ class TestCaseX:
         self.assertEqual(resolver.func, view)
 
 
-    def get_request(self, path, method="get", data=None):
+    def make_request(self, path, method="get", data=None, loggedin=False):
         factory = RequestFactory()
         data = data if data else {}
         if  method == "post":
             request = factory.post(path, data=data)
         else:
             request = factory.get(path, data=data)
+        request.user = Mock()
+        request.session = {}
+        if loggedin:
+            request.user.is_authenticated = True
+        else:
+            request.user.is_authenticated = False
         return request
 
 
@@ -35,7 +42,7 @@ class TestCaseX:
 
 
     def check_view_has_context(self, view, request, context, *args):
-        render_patcher = patch("zincbind.views.render")
+        render_patcher = patch("django.shortcuts.render")
         mock_render = render_patcher.start()
         try:
             response = view(request, *args)
@@ -79,3 +86,7 @@ class TestCaseX:
         self.scroll_to(element)
         element.click()
         sleep(0.5)
+
+
+    def sleep(self, duration):
+        sleep(duration)
