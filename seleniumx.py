@@ -90,3 +90,11 @@ class TestCaseX:
 
     def sleep(self, duration):
         sleep(duration)
+
+
+    def check_invisible(self, element):
+        self.assertEqual(element.value_of_css_property("display"), "none")
+
+
+    def check_visible(self, element):
+        self.assertNotEqual(element.value_of_css_property("display"), "none")
