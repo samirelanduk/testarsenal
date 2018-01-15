@@ -4,6 +4,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase, RequestFactory
 from django.urls import resolve
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import Select
 
 class TestCaseX:
 
@@ -98,3 +99,8 @@ class TestCaseX:
 
     def check_visible(self, element):
         self.assertNotEqual(element.value_of_css_property("display"), "none")
+
+
+    def select_dropdown(self, dropdown, option):
+        dropdown = Select(dropdown)
+        dropdown.select_by_visible_text(option)
