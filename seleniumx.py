@@ -101,6 +101,11 @@ class TestCaseX:
         self.assertNotEqual(element.value_of_css_property("display"), "none")
 
 
+    def get_select_value(self, dropdown):
+        dropdown = Select(dropdown)
+        return dropdown.first_selected_option.text
+
+
     def select_dropdown(self, dropdown, option):
         dropdown = Select(dropdown)
         dropdown.select_by_visible_text(option)
