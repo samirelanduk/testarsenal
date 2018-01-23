@@ -1,10 +1,10 @@
 from setuptools import setup
 
-setup(name="seleniumx",
+setup(name="testarsenal",
       version="0.1.0",
-      description="Selenium tools",
-      long_description="Tools for making using Selenium easier",
-      url="https://github.com/samirelanduk/seleniumx",
+      description="Testing tools",
+      long_description="Tools for making using selenium and django testing easier",
+      url="https://github.com/samirelanduk/testarsenal",
       author="Sam Ireland",
       author_email="mail@samireland.com",
       license="MIT",
@@ -15,5 +15,5 @@ setup(name="seleniumx",
                    "Programming Language :: Python :: 3",
                    "Programming Language :: Python :: 3.5",
                    "Programming Language :: Python :: 3.6"],
-      py_modules=["seleniumx"],
+      py_modules=["testarsenal"],
       install_requires=[])

@@ -6,9 +6,7 @@ from django.urls import resolve
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import Select
 
-class TestCaseX:
-
-    NoElement = NoSuchElementException
+class DjangoTest(TestCase):
 
     def check_url_returns_view(self, url, view):
         resolver = resolve(url)
@@ -62,6 +60,12 @@ class TestCaseX:
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, url)
 
+
+
+
+class BrowserTest:
+
+    NoElement = NoSuchElementException
 
     def get(self, path):
         self.browser.get(self.live_server_url + path)
