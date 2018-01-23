@@ -5,3 +5,6 @@ __pycache__
 *.log
 secrets.py
 log.txt
+build
+dist
+*.egg-info
