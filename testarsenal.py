@@ -30,7 +30,8 @@ class DjangoTest(TestCase):
 
 
     def check_view_uses_template(self, view, request, template, *args):
-        render_patcher = patch("django.shortcuts.render")
+        views = view.__module__
+        render_patcher = patch(views + ".render")
         mock_render = render_patcher.start()
         try:
             response = view(request, *args)
@@ -41,7 +42,8 @@ class DjangoTest(TestCase):
 
 
     def check_view_has_context(self, view, request, context, *args):
-        render_patcher = patch("django.shortcuts.render")
+        views = view.__module__
+        render_patcher = patch(views + ".render")
         mock_render = render_patcher.start()
         try:
             response = view(request, *args)
@@ -59,6 +61,13 @@ class DjangoTest(TestCase):
         response = view(request, *args)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, url)
+
+
+    def check_all_objects_sent(self, model):
+        patcher = patch(
+         model.__module__ + "." + model.__class__.__name__ + "objects.all"
+        )
+        mock_all = patcher.start()
 
 
 
