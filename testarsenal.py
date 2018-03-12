@@ -6,6 +6,9 @@ from django.urls import resolve
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import Select
 
+__version__ = "0.2.0"
+__author__ = "Sam Ireland"
+
 class DjangoTest(TestCase):
 
     def check_url_returns_view(self, url, view):
@@ -117,6 +120,10 @@ class BrowserTest:
     def get_select_value(self, dropdown):
         dropdown = Select(dropdown)
         return dropdown.first_selected_option.text
+
+
+    def get_select_values(self, dropdown):
+        return [option.text for option in dropdown.find_elements_by_tag_name("option")]
 
 
     def select_dropdown(self, dropdown, option):
