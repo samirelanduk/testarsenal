@@ -1,8 +1,8 @@
 from time import sleep
 from unittest.mock import patch, Mock
-from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase, RequestFactory
 from django.urls import resolve
+from django.template.loader import get_template
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import Select
 
@@ -33,6 +33,7 @@ class DjangoTest(TestCase):
 
 
     def check_view_uses_template(self, view, request, template, *args):
+        get_template(template)
         views = view.__module__
         render_patcher = patch(views + ".render")
         mock_render = render_patcher.start()
