@@ -6,7 +6,7 @@ from django.urls import resolve
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import Select
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __author__ = "Sam Ireland"
 
 class DjangoTest(TestCase):
