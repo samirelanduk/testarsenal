@@ -119,8 +119,7 @@ class BrowserTest:
 
 
     def get_select_value(self, dropdown):
-        dropdown = Select(dropdown)
-        return dropdown.first_selected_option.text
+        return dropdown.get_attribute("value")
 
 
     def get_select_values(self, dropdown):
