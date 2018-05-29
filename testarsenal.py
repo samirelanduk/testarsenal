@@ -32,25 +32,25 @@ class DjangoTest(TestCase):
         return request
 
 
-    def check_view_uses_template(self, view, request, template, *args):
+    def check_view_uses_template(self, view, request, template, *args, **kwargs):
         get_template(template)
         views = view.__module__
         render_patcher = patch(views + ".render")
         mock_render = render_patcher.start()
         try:
-            response = view(request, *args)
+            response = view(request, *args, **kwargs)
             self.assertTrue(mock_render.called)
             self.assertEqual(mock_render.call_args_list[0][0][1], template)
         finally:
             render_patcher.stop()
 
 
-    def check_view_has_context(self, view, request, context, *args):
+    def check_view_has_context(self, view, request, context, *args, **kwargs):
         views = view.__module__
         render_patcher = patch(views + ".render")
         mock_render = render_patcher.start()
         try:
-            response = view(request, *args)
+            response = view(request, *args, **kwargs)
             self.assertTrue(mock_render.called)
             if len(mock_render.call_args_list[0][0]) <= 2:
                 self.fail("No context sent")
@@ -61,8 +61,8 @@ class DjangoTest(TestCase):
             render_patcher.stop()
 
 
-    def check_view_redirects(self, view, request, url, *args):
-        response = view(request, *args)
+    def check_view_redirects(self, view, request, url, *args, **kwargs):
+        response = view(request, *args, **kwargs)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, url)
 
