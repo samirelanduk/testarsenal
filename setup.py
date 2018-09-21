@@ -16,4 +16,4 @@ setup(name="testarsenal",
                    "Programming Language :: Python :: 3.5",
                    "Programming Language :: Python :: 3.6"],
       py_modules=["testarsenal"],
-      install_requires=[])
+      install_requires=["selenium"])
